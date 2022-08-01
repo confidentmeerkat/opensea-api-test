@@ -12,7 +12,7 @@ export default function Asset({ item }) {
       </ListItemIcon>
       <ListItemText
         primary={item.name}
-        secondary={item.description}
+        secondary={item.description && item.description.slice(0, 200)}
       ></ListItemText>
     </ListItem>
   );

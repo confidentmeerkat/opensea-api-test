@@ -29,7 +29,6 @@ const getProviderOptions = () => {
   return providerOptions;
 };
 
-
 function initWeb3(provider) {
   const web3 = new Web3(provider);
 
@@ -81,8 +80,6 @@ export default function Home() {
     setAddress(address);
   }
 
-  console.log(balances);
-
   async function subscribeProvider(provider) {
     if (!provider.on) return;
 
@@ -111,27 +108,64 @@ export default function Home() {
     <Container>
       {!address && (
         <Box my={2}>
-          <Button variant="contained" fullWidth onClick={handleConnect}>
+          <Button
+            sx={{
+              "&:hover": {
+                color: "white",
+                backgroundColor: "primary.main",
+              },
+            }}
+            variant="outlined"
+            fullWidth
+            onClick={handleConnect}
+          >
             Connect to Wallet
           </Button>
         </Box>
       )}
 
       {!!address && (
-        <Box my={2} display="flex" flexDirection="column">
-          <Typography mt={2} variant="h4">My Wallet</Typography>
-          <Divider />
-          <Typography mt={2}>Account Address: {address}</Typography>
-          <Typography mt={2}>
-            Balance: {balances.eth + " ETH, " + balances.usdc + " USDC"}
-          </Typography>
-          <Divider />
-
-          <Box color="primary" mt={4} display="flex" flexDirection="row" justifyContent="flex-end">
+        <Box my={2} display="flex" flexDirection="column" alignItems="center">
+          <div className="flex flex-row justify-end w-full">
             <Link href="/nfts">
-              <a>Search for NFTs</a>
+              <a className="flex py-2 px-4 text-blue-500">Search For NFTs</a>
             </Link>
-          </Box>
+          </div>
+          <Typography
+            variant="h4"
+            className="text-blue-600 py-4 justify-self-center"
+          >
+            My Wallet
+          </Typography>
+
+          <hr className="w-full" />
+
+          <div className="flex flex-col items-center my-4">
+            <h6 className="text-xl font-bold">Account Address</h6>
+            <i>{address}</i>
+          </div>
+
+          <hr className="w-full" />
+
+          <div className="flex flex-col items-center my-4">
+            <h6 className="text-xl font-bold">Wallet Balance</h6>
+            <div className="my-2 flex flex-row items-center space-x-2">
+              <img
+                src="/usd-coin-usdc-logo.svg"
+                className="w-4 h-4 rounded-full ring-1"
+              />
+              <span>
+                {balances.usdc} <strong>USDC</strong>
+              </span>
+              <img
+                src="/ethereum-eth-logo.svg"
+                className="w-4 h-4 rounded-full ring-1"
+              />
+              <span>
+                {balances.eth} <strong>ETH</strong>
+              </span>
+            </div>
+          </div>
         </Box>
       )}
     </Container>
